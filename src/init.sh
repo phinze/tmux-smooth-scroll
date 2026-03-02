@@ -16,12 +16,20 @@ tmux list-keys -T "$TABLE" | while IFS= read -r line; do
     fi
     
     case "$line" in
+        # Match default tmux scroll bindings
         *send-keys*scroll-up)       params="up normal" ;;
         *send-keys*scroll-down)     params="down normal" ;;
         *send-keys*halfpage-up)     params="up halfpage" ;;
         *send-keys*halfpage-down)   params="down halfpage" ;;
         *send-keys*page-up)         params="up fullpage" ;;
         *send-keys*page-down)       params="down fullpage" ;;
+        # Match our own bindings (for re-initialization after config reload)
+        *scroll.sh*up*normal*)      params="up normal" ;;
+        *scroll.sh*down*normal*)    params="down normal" ;;
+        *scroll.sh*up*halfpage*)    params="up halfpage" ;;
+        *scroll.sh*down*halfpage*)  params="down halfpage" ;;
+        *scroll.sh*up*fullpage*)    params="up fullpage" ;;
+        *scroll.sh*down*fullpage*)  params="down fullpage" ;;
         *) continue ;;
     esac
     
